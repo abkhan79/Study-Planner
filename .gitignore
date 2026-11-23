@@ -4,3 +4,7 @@ node_modules/
 *.pdf
 *.mp4
 .gitignore.txt
+*.pages
+*.pdf
+*.mp4
+.gitignore.txt
