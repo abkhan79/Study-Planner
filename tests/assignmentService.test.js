@@ -66,3 +66,27 @@ describe('US-04: AssignmentService - Progress Bar Calculation', () => {
         });
     });
 });
+
+describe('US-05: AssignmentService - Delete Assignment & Storage Persistence', () => {
+    it('deletes an existing assignment and persists the updated list to storage', () => {
+        const mockStorage = createMockStorage();
+        const service = new AssignmentService(mockStorage);
+        const a1 = service.addAssignment({ title: 'HW 1', course: 'CS 319', date: '2026-12-01' });
+        const a2 = service.addAssignment({ title: 'HW 2', course: 'CS 319', date: '2026-12-05' });
+
+        const deleted = service.deleteAssignment(a1.id);
+        expect(deleted).toBe(true);
+        expect(service.getAllSorted()).toHaveLength(1);
+        expect(service.getAllSorted()[0].id).toBe(a2.id);
+        expect(mockStorage.load()).toHaveLength(1);
+    });
+
+    it('returns false and leaves list unchanged when deleting a non-existent ID', () => {
+        const service = new AssignmentService(createMockStorage());
+        service.addAssignment({ title: 'HW 1', course: 'CS 319', date: '2026-12-01' });
+
+        const deleted = service.deleteAssignment('missing-id');
+        expect(deleted).toBe(false);
+        expect(service.getAllSorted()).toHaveLength(1);
+    });
+});
