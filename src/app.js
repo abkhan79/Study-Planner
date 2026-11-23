@@ -10,8 +10,14 @@ const dueDateInput = document.getElementById('dueDate');
 const tableBody = document.getElementById('assignmentTableBody');
 const titleError = document.getElementById('titleError');
 const dateError = document.getElementById('dateError');
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
 
 export function renderDashboard() {
+    const { completedCount, totalCount, percentage } = service.calculateProgress();
+    progressFill.style.width = `${percentage}%`;
+    progressText.textContent = `${completedCount} of ${totalCount} completed (${percentage}%)`;
+
     const sorted = service.getAllSorted();
     tableBody.innerHTML = '';
 
