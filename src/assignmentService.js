@@ -37,4 +37,14 @@ export class AssignmentService {
         this.storage.save(this.assignments);
         return target;
     }
+
+    calculateProgress() {
+        const totalCount = this.assignments.length;
+        if (totalCount === 0) {
+            return { completedCount: 0, totalCount: 0, percentage: 0 };
+        }
+        const completedCount = this.assignments.filter((item) => item.completed).length;
+        const percentage = Math.round((completedCount / totalCount) * 100);
+        return { completedCount, totalCount, percentage };
+    }
 }
