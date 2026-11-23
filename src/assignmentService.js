@@ -38,6 +38,16 @@ export class AssignmentService {
         return target;
     }
 
+    deleteAssignment(id) {
+        const initialLength = this.assignments.length;
+        this.assignments = this.assignments.filter((item) => item.id !== id);
+        if (this.assignments.length === initialLength) {
+            return false; // Non-existent ID safely ignored
+        }
+        this.storage.save(this.assignments);
+        return true;
+    }
+
     calculateProgress() {
         const totalCount = this.assignments.length;
         if (totalCount === 0) {
