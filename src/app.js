@@ -47,7 +47,18 @@ export function renderDashboard() {
         const dateCell = document.createElement('td');
         dateCell.textContent = item.date;
 
-        row.append(statusCell, titleCell, courseCell, dateCell);
+        const actionCell = document.createElement('td');
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.addEventListener('click', () => {
+            service.deleteAssignment(item.id);
+            renderDashboard();
+        });
+        actionCell.appendChild(deleteBtn);
+
+        row.append(statusCell, titleCell, courseCell, dateCell, actionCell);
         tableBody.appendChild(row);
     });
 }
